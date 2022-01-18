@@ -127,8 +127,8 @@ public class StudentServlet extends HttpServlet {
 		String class_st = request.getParameter("class_st");
 		String gender = request.getParameter("gender");
 
-		Student book = new Student(id, name, class_st, gender);
-		studentDAO.updateStudent(book);
+		Student student = new Student(id, name, class_st, gender);
+		studentDAO.updateStudent(student);
 		response.sendRedirect("list");
 		    }
 
