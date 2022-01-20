@@ -18,7 +18,7 @@ import lang.objectmethod.JDBCdemo.model.Student;
 /**
  * Servlet implementation class StudentServlet
  */
-@WebServlet("/")
+@WebServlet("/student/*")
 public class StudentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private StudentDAO studentDAO;
@@ -44,26 +44,27 @@ public class StudentServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String action = request.getServletPath();
+		String uri = request.getRequestURI();
+		String action = uri.substring(uri.lastIndexOf('/') + 1);
 
 		try {
 			switch (action) {
-			case "/new":
+			case "new":
 				showNewForm(request, response);
 				break;
-			case "/insert":
+			case "insert":
 				insertStudent(request, response);
 				break;
-			case "/delete":
+			case "delete":
 				deleteStudent(request, response);
 				break;
-			case "/edit":
+			case "edit":
 				showEditForm(request, response);
 				break;
-			case "/update":
+			case "update":
 				updateStudent(request, response);
 				break;
-			case "/show":
+			case "show":
 				listStudentAssistant(request, response);
 				break;
 			default:
@@ -79,7 +80,7 @@ public class StudentServlet extends HttpServlet {
 			throws SQLException, IOException, ServletException {
 		List<Student> listStudent = studentDAO.selectAllStudent();
 		request.setAttribute("listStudent", listStudent);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("student-list.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/student-list.jsp");
 		dispatcher.forward(request, response);
 	}
 
@@ -90,13 +91,13 @@ public class StudentServlet extends HttpServlet {
 		ArrayList<String> listStudentAssistant = studentDAO.selectAllStudentAssistant(id);
 
 		request.setAttribute("listStudentAssistant", listStudentAssistant);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("student-assistant-list.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/student-assistant-list.jsp");
 		dispatcher.forward(request, response);
 	}
 
 	private void showNewForm(HttpServletRequest request, HttpServletResponse response)
 		    throws ServletException, IOException {
-		RequestDispatcher dispatcher = request.getRequestDispatcher("student-form.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/student-form.jsp");
 		dispatcher.forward(request, response);
 	}
 
@@ -104,7 +105,7 @@ public class StudentServlet extends HttpServlet {
 			throws SQLException, ServletException, IOException {
 		int id = Integer.parseInt(request.getParameter("id"));
 		Student existingStudent = studentDAO.selectStudent(id);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("student-form.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/student-form.jsp");
 		request.setAttribute("student", existingStudent);
 		        dispatcher.forward(request, response);
 

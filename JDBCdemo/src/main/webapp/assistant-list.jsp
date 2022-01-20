@@ -13,14 +13,11 @@
             <header>
                 <nav class="navbar navbar-expand-md navbar-dark" style="background-color: tomato">
                     <div>
-                        <a href="/JDBCdemo/list" class="navbar-brand"> Student
+                        <a href="<%=request.getContextPath()%>/student/list" class="navbar-brand"> Student
      Management App </a>
                     </div>
 
-                    <ul class="navbar-nav">
-                        <li><a href="<%=request.getContextPath()%>/list" class="nav-link">Student</a></li>
-                        <li><a href="<%=request.getContextPath()%>/assistants" class="nav-link">Assistants</a></li>
-                    </ul>
+                    <%@ include file="navbar.jsp" %> 
                 </nav>
             </header>
             <br>
@@ -61,7 +58,7 @@
                                         <c:out value="${assistant.email}" />
                                     </td>
                                     <td>
-                                        &nbsp;&nbsp;&nbsp;&nbsp; <a href="show?id=<c:out value='${assistant.id}' />">Show All his students</a>
+                                        &nbsp;&nbsp;&nbsp;&nbsp; <a href="student/show?id=<c:out value='${assistant.id}' />">Show All his students</a>
                                     </td>
                                     <td></td>
                                 </tr>

@@ -13,14 +13,11 @@
             <header>
                 <nav class="navbar navbar-expand-md navbar-dark" style="background-color: tomato">
                     <div>
-                        <a href="/JDBCdemo/list" class="navbar-brand"> Student
+                        <a href="<%=request.getContextPath()%>/student/list" class="navbar-brand"> Student
      Management App </a>
                     </div>
 
-                    <ul class="navbar-nav">
-                        <li><a href="<%=request.getContextPath()%>/list" class="nav-link">Student</a></li>
-                        <li><a href="<%=request.getContextPath()%>/assistant" class="nav-link">Assistants</a></li>
-                    </ul>
+                   <%@ include file="navbar.jsp" %> 
                 </nav>
             </header>
             <br>

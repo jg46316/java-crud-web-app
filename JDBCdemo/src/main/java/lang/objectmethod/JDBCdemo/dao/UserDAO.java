@@ -10,39 +10,49 @@ import lang.objectmethod.JDBCdemo.model.User;
 
 
 public class UserDAO {
+	
+	
+	private String jdbcURL = "jdbc:mysql://localhost:3306/test?useSSL=false";
+	private String jdbcUsername = "root";
+	private String jdbcPassword = "password";
 
-	public int registerUser(User user) throws ClassNotFoundException {
-		String INSERT_USERS_SQL = "INSERT INTO user"
-				+ "  (id, first_name, last_name, username, password, address, contact) VALUES "
-				+ " (?, ?, ?, ?, ?,?,?);";
+	private static final String INSERT_USERS_SQL = "INSERT INTO user"
+			+ "  (first_name, last_name, username, password, address, contact) VALUES " + " (?, ?, ?, ?,?,?);";
 
-		int result = 0;
 
-		Class.forName("com.mysql.jdbc.Driver");
-
-		try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/test?useSSL=false",
-				"root", "password");
-
-				// Step 2:Create a statement using connection object
-				PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USERS_SQL)) {
-			preparedStatement.setInt(1, 1);
-			preparedStatement.setString(2, user.getFirstName());
-			preparedStatement.setString(3, user.getLastName());
-			preparedStatement.setString(4, user.getUsername());
-			preparedStatement.setString(5, user.getPassword());
-			preparedStatement.setString(6, user.getAddress());
-			preparedStatement.setString(7, user.getContact());
-
-			System.out.println(preparedStatement);
-			// Step 3: Execute the query or update query
-			result = preparedStatement.executeUpdate();
-
+	protected Connection getConnection() {
+		Connection connection = null;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			connection = DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword);
 		} catch (SQLException e) {
-			// process sql exception
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return connection;
+	}
+
+	public void registerUser(User user) throws SQLException {
+		System.out.println(INSERT_USERS_SQL);
+		// try-with-resource statement will auto close the connection.
+		try (Connection connection = getConnection();
+				PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USERS_SQL)) {
+			preparedStatement.setString(1, user.getFirstName());
+			preparedStatement.setString(2, user.getLastName());
+			preparedStatement.setString(3, user.getUsername());
+			preparedStatement.setString(4, user.getPassword());
+			preparedStatement.setString(5, user.getAddress());
+			preparedStatement.setString(6, user.getContact());
+			System.out.println(preparedStatement);
+			preparedStatement.executeUpdate();
+		} catch (SQLException e) {
 			printSQLException(e);
 		}
-		return result;
 	}
+
 
 	private void printSQLException(SQLException ex) {
 		for (Throwable e : ex) {

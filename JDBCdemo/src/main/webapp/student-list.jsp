@@ -13,16 +13,11 @@
             <header>
                 <nav class="navbar navbar-expand-md navbar-dark" style="background-color: tomato">
                     <div>
-                        <a href="/JDBCdemo/list" class="navbar-brand"> Student
+                        <a href="<%=request.getContextPath()%>/student/list" class="navbar-brand"> Student
      Management App </a>
                     </div>
-
-                    <ul class="navbar-nav">
-                        <li><a href="<%=request.getContextPath()%>/list" class="nav-link">Students</a></li>
-                        <li><a href="<%=request.getContextPath()%>/assistants" class="nav-link">Assistants</a></li>
-                        <li style="padding-left: 600px"><a href="<%=request.getContextPath()%>/register" class="nav-link">Register</a></li>
-                        <li><a href="<%=request.getContextPath()%>/login" class="nav-link">Login</a></li>
-                    </ul>
+					<%@ include file="navbar.jsp" %> 
+                  
                 </nav>
             </header>
             <br>
@@ -35,7 +30,7 @@
                     <hr>
                     <div class="container text-left">
 
-                        <a href="<%=request.getContextPath()%>/new" class="btn btn-success">Add
+                        <a href="<%=request.getContextPath()%>/student/new" class="btn btn-success">Add
      New Student</a>
                     </div>
                     <br>
@@ -66,7 +61,7 @@
                                     <td>
                                         <c:out value="${student.gender}" />
                                     </td>
-                                    <td><a href="edit?id=<c:out value='${student.id}' />">Edit</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="delete?id=<c:out value='${student.id}' />">Delete</a></td>
+                                    <td><a href="student/edit?id=<c:out value='${student.id}' />">Edit</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="delete?id=<c:out value='${student.id}' />">Delete</a></td>
                                 </tr>
                             </c:forEach>
                             <!-- } -->

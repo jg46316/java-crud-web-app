@@ -32,12 +32,12 @@ public class UserLoginServlet extends HttpServlet {
 
 		try {
 			User user = userDao.checkLogin(username, password);
-			String destPage = "login.jsp";
+			String destPage = "index.jsp";
 
 			if (user != null) {
 				HttpSession session = request.getSession();
 				session.setAttribute("user", user);
-				destPage = "/";
+				destPage = "/student/list";
 			} else {
 				String message = "Invalid username/password";
 				request.setAttribute("message", message);
